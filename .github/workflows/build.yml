@@ -15,21 +15,19 @@ jobs:
         run: |
           git clone --depth 1 https://github.com/bouffalolab/bl_iot_sdk.git
 
-      - name: Copy project into SDK
+      - name: Overwrite bl602_demo_wifi main.c with Pure Bridge
         run: |
-          mkdir -p bl_iot_sdk/customer_app/solare_uart_bridge/solare_uart_bridge
-          cp Makefile proj_config.mk bl_iot_sdk/customer_app/solare_uart_bridge/
-          cp main.c bouffalo.mk bl_iot_sdk/customer_app/solare_uart_bridge/solare_uart_bridge/
+          cp main.c bl_iot_sdk/customer_app/bl602_demo_wifi/bl602_demo_wifi/main.c
 
       - name: Compile with Bouffalo RISC-V Toolchain
         run: |
           export BL60X_SDK_PATH=$(pwd)/bl_iot_sdk
           export PATH=$(pwd)/bl_iot_sdk/toolchain/riscv/Linux/bin:$PATH
-          cd bl_iot_sdk/customer_app/solare_uart_bridge
+          cd bl_iot_sdk/customer_app/bl602_demo_wifi
           make
 
       - name: Upload Binary Artifact
         uses: actions/upload-artifact@v4
         with:
           name: BL602_PURE_BRIDGE_BIN
-          path: bl_iot_sdk/customer_app/solare_uart_bridge/build_out/*.bin
+          path: bl_iot_sdk/customer_app/bl602_demo_wifi/build_out/*.bin
