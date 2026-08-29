@@ -24,7 +24,7 @@ jobs:
           export BL60X_SDK_PATH=$(pwd)/bl_iot_sdk
           export PATH=$(pwd)/bl_iot_sdk/toolchain/riscv/Linux/bin:$PATH
           cd bl_iot_sdk/customer_app/bl602_demo_wifi
-          make CONFIG_CHIP_NAME=BL602
+          make CONFIG_CHIP_NAME=BL602 CONFIG_LINK_ROM=1
 
       - name: Upload Binary Artifact
         uses: actions/upload-artifact@v4
