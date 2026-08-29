@@ -15,6 +15,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <errno.h>
 
 #include <aos/kernel.h>
 #include <aos/yloop.h>
@@ -29,9 +30,7 @@
 
 #include <wifi_mgmr_ext.h>
 #include <bl_wifi.h>
-#include <hal_uart.h>
 #include <hosal_uart.h>
-#include <bl_uart.h>
 #include <bl_gpio.h>
 
 #define WIFI_TARGET_SSID     "lab4"
