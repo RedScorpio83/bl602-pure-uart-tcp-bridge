@@ -1,0 +1,35 @@
+name: Build Pure BL602 Bridge
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Clone Bouffalo Lab SDK
+        run: |
+          git clone --depth 1 https://github.com/bouffalolab/bl_iot_sdk.git
+
+      - name: Copy project into SDK
+        run: |
+          mkdir -p bl_iot_sdk/customer_app/solare_uart_bridge/solare_uart_bridge
+          cp Makefile proj_config.mk bl_iot_sdk/customer_app/solare_uart_bridge/
+          cp main.c bouffalo.mk bl_iot_sdk/customer_app/solare_uart_bridge/solare_uart_bridge/
+
+      - name: Compile with Bouffalo RISC-V Toolchain
+        run: |
+          export BL60X_SDK_PATH=$(pwd)/bl_iot_sdk
+          export PATH=$(pwd)/bl_iot_sdk/toolchain/riscv/Linux/bin:$PATH
+          cd bl_iot_sdk/customer_app/solare_uart_bridge
+          make
+
+      - name: Upload Binary Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BL602_PURE_BRIDGE_BIN
+          path: bl_iot_sdk/customer_app/solare_uart_bridge/build_out/*.bin
