@@ -1,7 +1,8 @@
 PROJECT_NAME := solare_uart_bridge
 PROJECT_PATH := $(abspath .)
 PROJECT_BOARD := evb
-export PROJECT_PATH PROJECT_BOARD
+CONFIG_CHIP_NAME := BL602
+export PROJECT_PATH PROJECT_BOARD CONFIG_CHIP_NAME
 
 -include ./proj_config.mk
 
